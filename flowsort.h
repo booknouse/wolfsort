@@ -45,26 +45,26 @@ void flowsort(void *array, size_t nmemb, size_t size, CMPFUNC *ignore)
 	{
 		if (nmemb <= 16)
 		{
-			tail_swap32(array, nmemb, NULL);
+			tail_swap32(CASTPINT(array), nmemb, NULL);
 		}
 		else if (nmemb < 128)
 		{
-			if (quad_swap32(array, nmemb, NULL) != nmemb)
+			if (quad_swap32(CASTPINT(array), nmemb, NULL) != nmemb)
 			{
-				int *swap = malloc(8 * size + nmemb * size / 2);
+				int *swap = CASTPINT(malloc(8 * size + nmemb * size / 2));
 
-				tail_merge32(array, swap, nmemb, 16, NULL);
+				tail_merge32(CASTPINT(array), swap, nmemb, 16, NULL);
 
 				free(swap);
 			}
 		}
 		else if (nmemb < 768)
 		{
-			if (quad_swap32(array, nmemb, NULL) != nmemb)
+			if (quad_swap32(CASTPINT(array), nmemb, NULL) != nmemb)
 			{
-				int *swap = malloc(nmemb * size / 2);
+				int *swap = CASTPINT(malloc(nmemb * size / 2));
 
-				quad_merge32(array, swap, nmemb, 16, NULL);
+				quad_merge32(CASTPINT(array), swap, nmemb, 16, NULL);
 
 				free(swap);
 			}
@@ -84,16 +84,16 @@ void flowsort(void *array, size_t nmemb, size_t size, CMPFUNC *ignore)
 				moduler /= 2;
 			}
 
-			count = calloc(sizeof(char), buckets);
+			count = CASTPUCHAR(calloc(sizeof(char), buckets));
 
-			stack1 = malloc(sizeof(int) * buckets);
-			stack2 = malloc(sizeof(int) * buckets / 512);
+			stack1 = CASTPUINT(malloc(sizeof(int) * buckets));
+			stack2 = CASTPUINT(malloc(sizeof(int) * buckets / 512));
 
-			swap = malloc(size * nmemb);
+			swap = CASTPINT(malloc(size * nmemb));
 
 			if (swap)
 			{
-				pta = array;
+				pta = CASTPINT(array);
 
 				for (cnt = 0 ; cnt < nmemb ; cnt++)
 				{
@@ -101,9 +101,9 @@ void flowsort(void *array, size_t nmemb, size_t size, CMPFUNC *ignore)
 
 					if (++count[index] == 255)
 					{
-						if (quad_swap32(array, nmemb, NULL) == 0)
+						if (quad_swap32(CASTPINT(array), nmemb, NULL) == 0)
 						{
-							quad_merge32(array, swap, nmemb, 16, NULL);
+							quad_merge32(CASTPINT(array), swap, nmemb, 16, NULL);
 						}
 						free(swap);
 						free(stack1);
@@ -127,7 +127,7 @@ void flowsort(void *array, size_t nmemb, size_t size, CMPFUNC *ignore)
 					max += count[index];
 				}
 
-				pta = array;
+				pta = CASTPINT(array);
 
 				for (cnt = 0 ; cnt < nmemb ; cnt++)
 				{
@@ -137,7 +137,7 @@ void flowsort(void *array, size_t nmemb, size_t size, CMPFUNC *ignore)
 				}
 
 				pts = swap;
-				pta = array;
+				pta = CASTPINT(array);
 
 				for (cnt = 0 ; cnt < nmemb ; cnt++)
 				{
@@ -190,23 +190,23 @@ void flowsort(void *array, size_t nmemb, size_t size, CMPFUNC *ignore)
 	{
 		if (nmemb <= 16)
 		{
-			tail_swap64(array, nmemb, NULL);
+			tail_swap64(CASTPLONGLONG(array), nmemb, NULL);
 		}
 		else if (nmemb < 128)
 		{
-			if (quad_swap64(array, nmemb, NULL) != nmemb)
+			if (quad_swap64(CASTPLONGLONG(array), nmemb, NULL) != nmemb)
 			{
 				long long swap[64];
-				tail_merge64(array, swap, nmemb, 16, NULL);
+				tail_merge64(CASTPLONGLONG(array), swap, nmemb, 16, NULL);
 			}
 		}
 		else if (nmemb < 512)
 		{
-			if (quad_swap64(array, nmemb, NULL) != nmemb)
+			if (quad_swap64(CASTPLONGLONG(array), nmemb, NULL) != nmemb)
 			{
-				long long *swap = malloc(nmemb * size / 2);
+				long long *swap = CASTPLONGLONG(malloc(nmemb * size / 2));
 
-				quad_merge64(array, swap, nmemb, 16, NULL);
+				quad_merge64(CASTPLONGLONG(array), swap, nmemb, 16, NULL);
 
 				free(swap);
 			}
@@ -226,16 +226,16 @@ void flowsort(void *array, size_t nmemb, size_t size, CMPFUNC *ignore)
 				moduler /= 2;
 			}
 
-			count = calloc(sizeof(char), buckets);
+			count = CASTPUCHAR(calloc(sizeof(char), buckets));
 
-			stack1 = malloc(sizeof(long long) * buckets);
-			stack2 = malloc(sizeof(long long) * buckets / 512);
+			stack1 = CASTPUINT(malloc(sizeof(long long) * buckets));
+			stack2 = CASTPUINT(malloc(sizeof(long long) * buckets / 512));
 
-			swap = malloc(size * nmemb);
+			swap = CASTPLONGLONG(malloc(size * nmemb));
 
 			if (swap)
 			{
-				pta = array;
+				pta = CASTPLONGLONG(array);
 
 				for (cnt = 0 ; cnt < nmemb ; cnt++)
 				{
@@ -243,9 +243,9 @@ void flowsort(void *array, size_t nmemb, size_t size, CMPFUNC *ignore)
 
 					if (++count[index] == 255)
 					{
-						if (quad_swap32(array, nmemb, NULL) == 0)
+						if (quad_swap32(CASTPINT(array), nmemb, NULL) == 0)
 						{
-							quad_merge64(array, swap, nmemb, 16, NULL);
+							quad_merge64(CASTPLONGLONG(array), swap, nmemb, 16, NULL);
 						}
 						free(swap);
 						free(stack1);
@@ -269,7 +269,7 @@ void flowsort(void *array, size_t nmemb, size_t size, CMPFUNC *ignore)
 					max += count[index];
 				}
 
-				pta = array;
+				pta = CASTPLONGLONG(array);
 
 				for (cnt = 0 ; cnt < nmemb ; cnt++)
 				{
@@ -279,7 +279,7 @@ void flowsort(void *array, size_t nmemb, size_t size, CMPFUNC *ignore)
 				}
 
 				pts = swap;
-				pta = array;
+				pta = CASTPLONGLONG(array);
 
 				for (cnt = 0 ; cnt < nmemb ; cnt++)
 				{
