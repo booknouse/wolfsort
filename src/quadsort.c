@@ -926,20 +926,20 @@ void FUNC(quadsort)(void *array, size_t nmemb, size_t size, CMPFUNC *cmp)
 {
 	if (nmemb < 16)
 	{
-		FUNC(tail_swap)(array, nmemb, cmp);
+		FUNC(tail_swap)(CASTPVAR(array), nmemb, cmp);
 	}
 	else if (nmemb < 128)
 	{
-		if (FUNC(quad_swap)(array, nmemb, cmp) == 0)
+		if (FUNC(quad_swap)(CASTPVAR(array), nmemb, cmp) == 0)
 		{
 			VAR swap[64];
 
-			FUNC(tail_merge)(array, swap, nmemb, 16, cmp);
+			FUNC(tail_merge)(CASTPVAR(array), swap, nmemb, 16, cmp);
 		}
 	}
-	else if (FUNC(quad_swap)(array, nmemb, cmp) == 0)
+	else if (FUNC(quad_swap)(CASTPVAR(array), nmemb, cmp) == 0)
 	{
-		VAR *swap = malloc(nmemb * size / 2);
+		VAR *swap =CASTPVAR(malloc(nmemb * size / 2));
 
 		if (swap == NULL)
 		{
@@ -948,7 +948,7 @@ void FUNC(quadsort)(void *array, size_t nmemb, size_t size, CMPFUNC *cmp)
 			return;
 		}
 
-		FUNC(quad_merge)(array, swap, nmemb, 16, cmp);
+		FUNC(quad_merge)(CASTPVAR(array), swap, nmemb, 16, cmp);
 
 		free(swap);
 	}
@@ -958,20 +958,20 @@ void FUNC(quadsort_swap)(VAR *array, VAR *swap, size_t nmemb, size_t size, CMPFU
 {
 	if (nmemb < 16)
 	{
-		FUNC(tail_swap)(array, nmemb, cmp);
+		FUNC(tail_swap)(CASTPVAR(array), nmemb, cmp);
 	}
 	else if (nmemb < 128)
 	{
-		if (FUNC(quad_swap)(array, nmemb, cmp) == 0)
+		if (FUNC(quad_swap)(CASTPVAR(array), nmemb, cmp) == 0)
 		{
-			FUNC(tail_merge)(array, swap, nmemb, 16, cmp);
+			FUNC(tail_merge)(CASTPVAR(array), swap, nmemb, 16, cmp);
 		}
 	}
 	else
 	{
-		if (FUNC(quad_swap)(array, nmemb, cmp) == 0)
+		if (FUNC(quad_swap)(CASTPVAR(array), nmemb, cmp) == 0)
 		{
-			FUNC(quad_merge)(array, swap, nmemb, 16, cmp);
+			FUNC(quad_merge)(CASTPVAR(array), swap, nmemb, 16, cmp);
 		}
 	}
 }

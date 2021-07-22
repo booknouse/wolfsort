@@ -88,7 +88,7 @@ void wolfsort(void *array, size_t nmemb, unsigned char size, CMPFUNC *ignore)
 
 			if (++count[index] == bsize)
 			{
-				quadsort_swap32(array, swap, nmemb, size, ignore);
+				quadsort_swap32(CASTPINT(array), swap, nmemb, size, ignore);
 
 				free(swap);
 				free(stack);
@@ -180,7 +180,7 @@ void wolfsort(void *array, size_t nmemb, unsigned char size, CMPFUNC *ignore)
 
 			if (++count[index] == bsize)
 			{
-				quadsort_swap64(array, swap, nmemb, size, ignore);
+				quadsort_swap64(CASTPLONGLONG(array), swap, nmemb, size, ignore);
 
 				free(swap);
 				free(stack);

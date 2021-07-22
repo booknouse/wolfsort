@@ -35,6 +35,23 @@
 #include <assert.h>
 #include <errno.h>
 
+#ifdef __cplusplus
+	#define register
+	#define CASTPVAR(a) static_cast<VAR*>(a)
+	#define CASTPINT(a) static_cast<int*>(a)
+    #define CASTPUINT(a) static_cast<unsigned int*>(a)
+    #define CASTPUCHAR(a) static_cast<unsigned char*>(a)
+    #define CASTPLONGLONG(a) static_cast<long long*>(a)
+    #define CASTPLONGDOUBLE(a) static_cast<long double*>(a)
+#elif
+	#define CASTPVAR(a) a
+	#define CASTPINT(a) a
+    #define CASTPUINT(a) a
+	#define CASTPUCHAR(a) a
+	#define CASTPLONGLONG(a) a
+	#define CASTPLONGDOUBLE(a) a
+#endif
+
 typedef int CMPFUNC (const void *a, const void *b);
 
 #define cmp(a,b) (*(a) > *(b))
