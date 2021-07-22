@@ -26,9 +26,6 @@
 /*
 	quadsort 1.1.3.3
 */
-#ifdef __cplusplus
-	#define register
-#endif
 void FUNC(tail_insert)(VAR *array, VAR *pta, CMPFUNC *cmp)
 {
 	VAR *pte, key;
