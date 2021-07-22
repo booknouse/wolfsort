@@ -36,7 +36,6 @@
 #include <errno.h>
 
 #ifdef __cplusplus
-	#define register
 	#define CASTPVAR(a) static_cast<VAR*>(a)
 	#define CASTPINT(a) static_cast<int*>(a)
     #define CASTPUINT(a) static_cast<unsigned int*>(a)
