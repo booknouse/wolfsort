@@ -38,11 +38,9 @@ void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> *igno
         //stack = (unsigned int *) calloc(sizeof(int), buckets);
 
         pta = array;
-        std::cout<<"buckets="<<buckets<<std::endl;
         for (cnt = nmemb ; cnt ; cnt--)
         {
             index = PTR_VALUE(pta++) / moduler;
-            std::cout<<"index="<<index<<std::endl;
 
             if (++count[index] == bsize)
             {
