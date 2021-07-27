@@ -56,7 +56,7 @@ size_t FUNC(flux_analyze)(T *array, size_t nmemb, CMPFUNC<T> *cmp)
 
         do
         {
-            swap = *pta; *pta++ = *--ptb; *ptb = swap;
+            swap = MOVE(*pta); *pta++ = MOVE(*--ptb); *ptb = MOVE(swap);
         }
         while (--cnt);
 

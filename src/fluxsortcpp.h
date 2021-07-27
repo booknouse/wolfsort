@@ -37,10 +37,16 @@
 //using CMPFUNC=int (const T *a, const T *b);
 
 #undef FUNC
-#undef PTR_VALUE
+#define MOVE(NAME) NAME
 #define FUNC(NAME) NAME
-#define PTR_VALUE(NAME) *(NAME)
+#include "fluxsortcpp.cpp"
+
+#undef FUNC
+#undef MOVE
+
+#define MOVE(NAME) std::move(NAME)
+#define FUNC(NAME) NAME##_move
 #include "fluxsortcpp.cpp"
 
 #undef FUNC_PTR
-#undef PTR_VALUE
+#undef MOVE

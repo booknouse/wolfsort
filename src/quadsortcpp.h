@@ -57,157 +57,18 @@ using CMPFUNC=int (const T *a, const T *b);
 	#define CASTPLONGDOUBLE(a) a
 #endif
 
-#define swap_two(array, swap)  \
-{  \
-	if (cmp(array, array + 1) > 0)  \
-	{  \
-		swap = array[1]; array[1] = array[0]; array[0] = swap;  \
-	}  \
-}
-
-#define swap_three(array, swap)  \
-{  \
-	if (cmp(array, array + 1) > 0)  \
-	{  \
-		if (cmp(array, array + 2) <= 0)  \
-		{  \
-			swap = array[0]; array[0] = array[1]; array[1] = swap;  \
-		}  \
-		else if (cmp(array + 1, array + 2) > 0)  \
-		{  \
-			swap = array[0]; array[0] = array[2]; array[2] = swap;  \
-		}  \
-		else  \
-		{  \
-			swap = array[0]; array[0] = array[1]; array[1] = array[2]; array[2] = swap;  \
-		}  \
-	}  \
-	else if (cmp(array + 1, array + 2) > 0)  \
-	{  \
-		if (cmp(array, array + 2) > 0)  \
-		{  \
-			swap = array[2]; array[2] = array[1]; array[1] = array[0]; array[0] = swap;  \
-		}  \
-		else   \
-		{  \
-			swap = array[2]; array[2] = array[1]; array[1] = swap;  \
-		}  \
-	}  \
-}  \
-
-#define swap_four(array, swap)  \
-{  \
-	if (cmp(array, array + 1) > 0)  \
-	{  \
-		swap = array[0]; array[0] = array[1]; array[1] = swap;  \
-	}  \
-	if (cmp(array + 2, array + 3) > 0)  \
-	{  \
-		swap = array[2]; array[2] = array[3]; array[3] = swap;  \
-	}  \
-	if (cmp(array + 1, array + 2) > 0)  \
-	{  \
-		if (cmp(array, array + 2) <= 0)  \
-		{  \
-			if (cmp(array + 1, array + 3) <= 0)  \
-			{  \
-				swap = array[1]; array[1] = array[2]; array[2] = swap;  \
-			}  \
-			else  \
-			{  \
-				swap = array[1]; array[1] = array[2]; array[2] = array[3]; array[3] = swap;  \
-			}  \
-		}  \
-		else if (cmp(array, array + 3) > 0)  \
-		{  \
-			swap = array[1]; array[1] = array[3]; array[3] = swap;  \
-			swap = array[0]; array[0] = array[2]; array[2] = swap;  \
-		}  \
-		else if (cmp(array + 1, array + 3) <= 0)  \
-		{  \
-			swap = array[1]; array[1] = array[0]; array[0] = array[2]; array[2] = swap;  \
-		}  \
-		else  \
-		{  \
-			swap = array[1]; array[1] = array[0]; array[0] = array[2]; array[2] = array[3]; array[3] = swap;  \
-		}  \
-	}  \
-}
-
-#define tail_swap_eight(array, pta, ptt, end, key, cmp) \
-{ \
-	pta = end++; \
-	ptt = pta--; \
- \
-	if (cmp(pta, ptt) > 0) \
-	{ \
-		key = *ptt; \
-		*ptt-- = *pta--; \
- \
-		if (cmp(pta - 2, &key) > 0) \
-		{ \
-			*ptt-- = *pta--; *ptt-- = *pta--; *ptt-- = *pta--; \
-		} \
-		if (pta > array && cmp(pta - 1, &key) > 0) \
-		{ \
-			*ptt-- = *pta--; *ptt-- = *pta--; \
-		} \
-		if (pta >= array && cmp(pta, &key) > 0) \
-		{ \
-			*ptt-- = *pta; \
-		} \
-		*ptt = key; \
-	} \
-}
-
-#define swap_five(array, pta, ptt, end, key, cmp) \
-{ \
-	end = array + 4; \
- \
-	pta = end++; \
-	ptt = pta--; \
- \
-	if (cmp(pta, ptt) > 0) \
-	{ \
-		key = *ptt; \
-		*ptt-- = *pta--; \
- \
-		if (pta > array && cmp(pta - 1, &key) > 0) \
-		{ \
-			*ptt-- = *pta--; *ptt-- = *pta--; \
-		} \
-		if (pta >= array && cmp(pta, &key) > 0) \
-		{ \
-			*ptt-- = *pta; \
-		} \
-		*ptt = key; \
-	} \
-}
-
-#define swap_six(array, pta, ptt, end, key, cmp) \
-{ \
-	swap_five(array, pta, ptt, end, key, cmp); \
-	tail_swap_eight(array, pta, ptt, end, key, cmp); \
-}
-
-#define swap_seven(array, pta, ptt, end, key, cmp) \
-{ \
-	swap_six(array, pta, ptt, end, key, cmp); \
-	tail_swap_eight(array, pta, ptt, end, key, cmp); \
-}
-
-#define swap_eight(array, pta, ptt, end, key, cmp) \
-{ \
-	swap_seven(array, pta, ptt, end, key, cmp); \
-	tail_swap_eight(array, pta, ptt, end, key, cmp); \
-}
+#undef FUNC
+#undef MOVE
+#define MOVE(NAME) NAME
+#define FUNC(NAME) NAME
+#include "quadsortcpp.cpp"
 
 #undef FUNC
-#undef PTR_VALUE
-#define FUNC(NAME) NAME
-#define PTR_VALUE(NAME) *(NAME)
+#undef MOVE
+#define MOVE(NAME) std::move(NAME)
+#define FUNC(NAME) NAME##_move
 #include "quadsortcpp.cpp"
 
 #undef FUNC_PTR
-#undef PTR_VALUE
+#undef MOVE
 

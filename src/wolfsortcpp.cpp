@@ -1,9 +1,9 @@
-template<typename T, typename E>
+template<typename T>
 void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> *ignore)
 {
     if (nmemb < 1024)
     {
-        return fluxsort(array, nmemb, ignore);
+        return FUNC(fluxsort)(array, nmemb, ignore);
     }
 
     if (size == sizeof(int))
@@ -19,7 +19,7 @@ void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> *igno
 
         if (swap == NULL)
         {
-            return fluxsort(array, nmemb, ignore);
+            return FUNC(fluxsort)(array, nmemb, ignore);
         }
 
         while (moduler > 8096 && nmemb / buckets > 4)
@@ -30,22 +30,23 @@ void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> *igno
 
         bsize = nmemb / (buckets / 16);
 
-        auto count_vc = std::vector<unsigned int>(buckets);
+        auto count_vc = std::vector<unsigned int>(buckets,0);
         count = count_vc.data();
-        auto stack_vc = std::vector<unsigned int>(buckets);
+        auto stack_vc = std::vector<unsigned int>(buckets,0);
         stack = stack_vc.data();
         //count = (unsigned int *) calloc(sizeof(int), buckets);
         //stack = (unsigned int *) calloc(sizeof(int), buckets);
 
         pta = array;
-
+        std::cout<<"buckets="<<buckets<<std::endl;
         for (cnt = nmemb ; cnt ; cnt--)
         {
-            index = PTR_VALUE(pta++) / E(moduler);
+            index = PTR_VALUE(pta++) / moduler;
+            std::cout<<"index="<<index<<std::endl;
 
             if (++count[index] == bsize)
             {
-                fluxsort_swap(array, swap, nmemb, ignore);
+                FUNC(fluxsort_swap)(array, swap, nmemb, ignore);
                 return;
             }
         }
@@ -63,7 +64,7 @@ void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> *igno
 
         for (cnt = nmemb ; cnt ; cnt--)
         {
-            index = PTR_VALUE(pta) / E(moduler);
+            index = PTR_VALUE(pta) / moduler;
 
             swap[stack[index]++] = *pta++;
         }
@@ -79,14 +80,14 @@ void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> *igno
             {
                 if (bsize <= 32)
                 {
-                    tail_swap_cpy(pta, pts, bsize, ignore);
+                    FUNC(tail_swap_cpy)(pta, pts, bsize, ignore);
                 }
                 else
                 {
                     //memcpy(pta, pts, bsize * size);
                     std::copy(pts, pts+bsize, pta);
 
-                    fluxsort_swap(pta, pts, bsize, ignore);
+                    FUNC(fluxsort_swap)(pta, pts, bsize, ignore);
                 }
                 pta += bsize;
                 pts += bsize;
@@ -108,7 +109,7 @@ void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> *igno
 
         if (swap == NULL)
         {
-            return fluxsort(array, nmemb, ignore);
+            return FUNC(fluxsort)(array, nmemb, ignore);
         }
 
         while (moduler > 4294967296ULL && nmemb / buckets > 4)
@@ -119,9 +120,9 @@ void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> *igno
 
         bsize = nmemb / (buckets / 16);
 
-        auto count_vc = std::vector<unsigned int>(buckets);
+        auto count_vc = std::vector<unsigned int>(buckets,0);
         count = count_vc.data();
-        auto stack_vc = std::vector<unsigned int>(buckets);
+        auto stack_vc = std::vector<unsigned int>(buckets,0);
         stack = stack_vc.data();
         //count = (unsigned int *) calloc(sizeof(int), buckets);
         //stack = (unsigned int *) malloc(sizeof(int) * buckets);
@@ -130,11 +131,11 @@ void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> *igno
 
         for (cnt = nmemb ; cnt ; cnt--)
         {
-            index = PTR_VALUE(pta++) / E(moduler);
+            index = PTR_VALUE(pta++) / moduler;
 
             if (++count[index] == bsize)
             {
-                fluxsort_swap(array, swap, nmemb, ignore);
+                FUNC(fluxsort_swap)(array, swap, nmemb, ignore);
                 return;
             }
         }
@@ -152,7 +153,7 @@ void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> *igno
 
         for (cnt = nmemb ; cnt ; cnt--)
         {
-            index =  PTR_VALUE(pta) / E(moduler);
+            index =  PTR_VALUE(pta) / moduler;
 
             swap[stack[index]++] = *pta++;
         }
@@ -168,14 +169,14 @@ void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> *igno
             {
                 if (bsize <= 16)
                 {
-                    tail_swap_cpy(pta, pts, bsize, ignore);
+                    FUNC(tail_swap_cpy)(pta, pts, bsize, ignore);
                 }
                 else
                 {
                     //memcpy(pta, pts, bsize * size);
                     std::copy(pts,pts+bsize,pta);
 
-                    fluxsort_swap(pta, pts, bsize, ignore);
+                    FUNC(fluxsort_swap)(pta, pts, bsize, ignore);
                 }
                 pta += bsize;
                 pts += bsize;
@@ -187,5 +188,5 @@ void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> *igno
 
 //	assert(size == sizeof(int) || size == sizeof(long long));
 
-    fluxsort(array, nmemb, ignore);
+    FUNC(fluxsort)(array, nmemb, ignore);
 }

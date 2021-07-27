@@ -47,7 +47,7 @@
 //typedef int CMPFUNC (const void *a, const void *b);
 #undef FUNC
 #undef PTR_VALUE
-#define FUNC(NAME) NAME##_ptr
+#define FUNC(NAME) NAME##_move
 #define PTR_VALUE(NAME) **(NAME)
 #include "wolfsortcpp.cpp"
 

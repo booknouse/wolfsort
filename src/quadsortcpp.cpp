@@ -26,6 +26,151 @@
 /*
 	quadsort 1.1.4.1
 */
+#define swap_two(array, swap)  \
+{  \
+	if (cmp(array, array + 1) > 0)  \
+	{  \
+		swap = MOVE(array[1]); array[1] = MOVE(array[0]); array[0] = MOVE(swap);  \
+	}  \
+}
+
+#define swap_three(array, swap)  \
+{  \
+	if (cmp(array, array + 1) > 0)  \
+	{  \
+		if (cmp(array, array + 2) <= 0)  \
+		{  \
+			swap = MOVE(array[0]); array[0] = MOVE(array[1]); array[1] = MOVE(swap);  \
+		}  \
+		else if (cmp(array + 1, array + 2) > 0)  \
+		{  \
+			swap = MOVE(array[0]); array[0] = MOVE(array[2]); array[2] = MOVE(swap);  \
+		}  \
+		else  \
+		{  \
+			swap = MOVE(array[0]); array[0] = MOVE(array[1]); array[1] = MOVE(array[2]); array[2] = MOVE(swap);  \
+		}  \
+	}  \
+	else if (cmp(array + 1, array + 2) > 0)  \
+	{  \
+		if (cmp(array, array + 2) > 0)  \
+		{  \
+			swap = MOVE(array[2]); array[2] = MOVE(array[1]); array[1] = MOVE(array[0]); array[0] = MOVE(swap);  \
+		}  \
+		else   \
+		{  \
+			swap = MOVE(array[2]); array[2] = MOVE(array[1]); array[1] = MOVE(swap);  \
+		}  \
+	}  \
+}  \
+
+#define swap_four(array, swap)  \
+{  \
+	if (cmp(array, array + 1) > 0)  \
+	{  \
+		swap = MOVE(array[0]); array[0] = MOVE(array[1]); array[1] = MOVE(swap);  \
+	}  \
+	if (cmp(array + 2, array + 3) > 0)  \
+	{  \
+		swap = MOVE(array[2]); array[2] = MOVE(array[3]); array[3] = MOVE(swap);  \
+	}  \
+	if (cmp(array + 1, array + 2) > 0)  \
+	{  \
+		if (cmp(array, array + 2) <= 0)  \
+		{  \
+			if (cmp(array + 1, array + 3) <= 0)  \
+			{  \
+				swap = MOVE(array[1]); array[1] = MOVE(array[2]); array[2] = MOVE(swap);  \
+			}  \
+			else  \
+			{  \
+				swap = MOVE(array[1]); array[1] = MOVE(array[2]); array[2] = MOVE(array[3]); array[3] = MOVE(swap);  \
+			}  \
+		}  \
+		else if (cmp(array, array + 3) > 0)  \
+		{  \
+			swap = MOVE(array[1]); array[1] = MOVE(array[3]); array[3] = MOVE(swap);  \
+			swap = MOVE(array[0]); array[0] = MOVE(array[2]); array[2] = MOVE(swap);  \
+		}  \
+		else if (cmp(array + 1, array + 3) <= 0)  \
+		{  \
+			swap = MOVE(array[1]); array[1] = MOVE(array[0]); array[0] = MOVE(array[2]); array[2] = MOVE(swap);  \
+		}  \
+		else  \
+		{  \
+			swap = MOVE(array[1]); array[1] = MOVE(array[0]); array[0] = MOVE(array[2]); array[2] = MOVE(array[3]); array[3] = MOVE(swap);  \
+		}  \
+	}  \
+}
+
+#define tail_swap_eight(array, pta, ptt, end, key, cmp) \
+{ \
+	pta = end++; \
+	ptt = pta--; \
+ \
+	if (cmp(pta, ptt) > 0) \
+	{ \
+		key = MOVE(*ptt); \
+		*ptt-- = MOVE(*pta--); \
+ \
+		if (cmp(pta - 2, &key) > 0) \
+		{ \
+			*ptt-- = MOVE(*pta--); *ptt-- = MOVE(*pta--); *ptt-- = MOVE(*pta--); \
+		} \
+		if (pta > array && cmp(pta - 1, &key) > 0) \
+		{ \
+			*ptt-- = MOVE(*pta--); *ptt-- = MOVE(*pta--); \
+		} \
+		if (pta >= array && cmp(pta, &key) > 0) \
+		{ \
+			*ptt-- = MOVE(*pta); \
+		} \
+		*ptt = MOVE(key); \
+	} \
+}
+
+#define swap_five(array, pta, ptt, end, key, cmp) \
+{ \
+	end = array + 4; \
+ \
+	pta = end++; \
+	ptt = pta--; \
+ \
+	if (cmp(pta, ptt) > 0) \
+	{ \
+		key = MOVE(*ptt); \
+		*ptt-- = *pta--; \
+ \
+		if (pta > array && cmp(pta - 1, &key) > 0) \
+		{ \
+			*ptt-- = MOVE(*pta--); *ptt-- = MOVE(*pta--); \
+		} \
+		if (pta >= array && cmp(pta, &key) > 0) \
+		{ \
+			*ptt-- = MOVE(*pta); \
+		} \
+		*ptt = MOVE(key); \
+	} \
+}
+
+#define swap_six(array, pta, ptt, end, key, cmp) \
+{ \
+	swap_five(array, pta, ptt, end, key, cmp); \
+	tail_swap_eight(array, pta, ptt, end, key, cmp); \
+}
+
+#define swap_seven(array, pta, ptt, end, key, cmp) \
+{ \
+	swap_six(array, pta, ptt, end, key, cmp); \
+	tail_swap_eight(array, pta, ptt, end, key, cmp); \
+}
+
+#define swap_eight(array, pta, ptt, end, key, cmp) \
+{ \
+	swap_seven(array, pta, ptt, end, key, cmp); \
+	tail_swap_eight(array, pta, ptt, end, key, cmp); \
+}
+
 template<typename T>
 void FUNC(tail_swap)(T *array, unsigned char nmemb, CMPFUNC<T> *cmp)
 {
@@ -86,7 +231,7 @@ void FUNC(tail_swap)(T *array, unsigned char nmemb, CMPFUNC<T> *cmp)
 			continue;
 		}
 
-		tmp = *ptt;
+		tmp = MOVE(*ptt);
 
 		while (top > 1)
 		{
@@ -102,7 +247,7 @@ void FUNC(tail_swap)(T *array, unsigned char nmemb, CMPFUNC<T> *cmp)
 		//memmove(pta + 1, pta, (ptt - pta) * sizeof(VAR));
 		std::copy(pta, ptt, pta+1);
 
-		*pta = tmp;
+		*pta = MOVE(tmp);
 	}
 }
 
@@ -134,13 +279,13 @@ unsigned int FUNC(quad_swap)(T *array, unsigned int nmemb, CMPFUNC<T> *cmp)
 					pta += 4;
 					goto swapper;
 				}
-				tmp = pta[2]; pta[2] = pta[3]; pta[3] = tmp;
+				tmp = MOVE(pta[2]); pta[2] = MOVE(pta[3]); pta[3] = MOVE(tmp);
 			}
-			tmp = pta[0]; pta[0] = pta[1]; pta[1] = tmp;
+			tmp = MOVE(pta[0]); pta[0] = MOVE(pta[1]); pta[1] = MOVE(tmp);
 		}
 		else if (cmp(&pta[2], &pta[3]) > 0)
 		{
-			tmp = pta[2]; pta[2] = pta[3]; pta[3] = tmp;
+			tmp = MOVE(pta[2]); pta[2] = MOVE(pta[3]); pta[3] = MOVE(tmp);
 		}
 
 		if (cmp(&pta[1], &pta[2]) > 0)
@@ -149,24 +294,24 @@ unsigned int FUNC(quad_swap)(T *array, unsigned int nmemb, CMPFUNC<T> *cmp)
 			{
 				if (cmp(&pta[1], &pta[3]) <= 0)
 				{
-					tmp = pta[1]; pta[1] = pta[2]; pta[2] = tmp;
+					tmp = MOVE(pta[1]); pta[1] = MOVE(pta[2]); pta[2] = MOVE(tmp);
 				}
 				else
 				{
-					tmp = pta[1]; pta[1] = pta[2]; pta[2] = pta[3]; pta[3] = tmp;
+					tmp = MOVE(pta[1]); pta[1] = MOVE(pta[2]); pta[2] = MOVE(pta[3]); pta[3] = MOVE(tmp);
 				}
 			}
 			else if (cmp(&pta[0], &pta[3]) > 0)
 			{
-				tmp = pta[1]; pta[1] = pta[3]; pta[3] = tmp; tmp = pta[0]; pta[0] = pta[2]; pta[2] = tmp;
+				tmp = MOVE(pta[1]); pta[1] = MOVE(pta[3]); pta[3] = MOVE(tmp); tmp = MOVE(pta[0]); pta[0] = MOVE(pta[2]); pta[2] = MOVE(tmp);
 			}
 			else if (cmp(&pta[1], &pta[3]) <= 0)
 			{
-				tmp = pta[1]; pta[1] = pta[0]; pta[0] = pta[2]; pta[2] = tmp;
+				tmp = MOVE(pta[1]); pta[1] = MOVE(pta[0]); pta[0] = MOVE(pta[2]); pta[2] = MOVE(tmp);
 			}
 			else
 			{
-				tmp = pta[1]; pta[1] = pta[0]; pta[0] = pta[2]; pta[2] = pta[3]; pta[3] = tmp;
+				tmp = MOVE(pta[1]); pta[1] = MOVE(pta[0]); pta[0] = MOVE(pta[2]); pta[2] = MOVE(pta[3]); pta[3] = MOVE(tmp);
 			}
 		}
 		pta += 4;
@@ -190,13 +335,13 @@ unsigned int FUNC(quad_swap)(T *array, unsigned int nmemb, CMPFUNC<T> *cmp)
 							goto swapper;
 						}
 					}
-					tmp = pta[2]; pta[2] = pta[3]; pta[3] = tmp;
+					tmp = MOVE(pta[2]); pta[2] = MOVE(pta[3]); pta[3] = MOVE(tmp);
 				}
-				tmp = pta[0]; pta[0] = pta[1]; pta[1] = tmp;
+				tmp = MOVE(pta[0]); pta[0] = MOVE(pta[1]); pta[1] = MOVE(tmp);
 			}
 			else if (cmp(&pta[2], &pta[3]) > 0)
 			{
-				tmp = pta[2]; pta[2] = pta[3]; pta[3] = tmp;
+				tmp = MOVE(pta[2]); pta[2] = MOVE(pta[3]); pta[3] = MOVE(tmp);
 			}
 
 			if (cmp(&pta[1], &pta[2]) > 0)
@@ -205,24 +350,24 @@ unsigned int FUNC(quad_swap)(T *array, unsigned int nmemb, CMPFUNC<T> *cmp)
 				{
 					if (cmp(&pta[1], &pta[3]) <= 0)
 					{
-						tmp = pta[1]; pta[1] = pta[2]; pta[2] = tmp;
+						tmp = MOVE(pta[1]); pta[1] = MOVE(pta[2]); pta[2] = MOVE(tmp);
 					}
 					else
 					{
-						tmp = pta[1]; pta[1] = pta[2]; pta[2] = pta[3]; pta[3] = tmp;
+						tmp = MOVE(pta[1]); pta[1] = MOVE(pta[2]); pta[2] = MOVE(pta[3]); pta[3] = MOVE(tmp);
 					}
 				}
 				else if (cmp(&pta[0], &pta[3]) > 0)
 				{
-					tmp = pta[0]; pta[0] = pta[2]; pta[2] = tmp; tmp = pta[1]; pta[1] = pta[3]; pta[3] = tmp;
+					tmp = MOVE(pta[0]); pta[0] = MOVE(pta[2]); pta[2] = MOVE(tmp); tmp = MOVE(pta[1]); pta[1] = MOVE(pta[3]); pta[3] = MOVE(tmp);
 				}
 				else if (cmp(&pta[1], &pta[3]) <= 0)
 				{
-					tmp = pta[0]; pta[0] = pta[2]; pta[2] = pta[1]; pta[1] = tmp;
+					tmp = MOVE(pta[0]); pta[0] = MOVE(pta[2]); pta[2] = MOVE(pta[1]); pta[1] = MOVE(tmp);
 				}
 				else
 				{
-					tmp = pta[0]; pta[0] = pta[2]; pta[2] = pta[3]; pta[3] = pta[1]; pta[1] = tmp;
+					tmp = MOVE(pta[0]); pta[0] = MOVE(pta[2]); pta[2] = MOVE(pta[3]); pta[3] = MOVE(pta[1]); pta[1] = MOVE(tmp);
 				}
 			}
 			ptt = pta - 1;
@@ -231,7 +376,7 @@ unsigned int FUNC(quad_swap)(T *array, unsigned int nmemb, CMPFUNC<T> *cmp)
 
 			do
 			{
-				tmp = *pts; *pts++ = *ptt; *ptt-- = tmp;
+				tmp = MOVE(*pts); *pts++ = MOVE(*ptt); *ptt-- = MOVE(tmp);
 			}
 			while (reverse--);
 
@@ -266,7 +411,7 @@ unsigned int FUNC(quad_swap)(T *array, unsigned int nmemb, CMPFUNC<T> *cmp)
 
 					do
 					{
-						tmp = *pts; *pts++ = *ptt; *ptt-- = tmp;
+						tmp = MOVE(*pts); *pts++ = MOVE(*ptt); *ptt-- = MOVE(tmp);
 					}
 					while (reverse--);
 
@@ -279,7 +424,7 @@ unsigned int FUNC(quad_swap)(T *array, unsigned int nmemb, CMPFUNC<T> *cmp)
 
 		do
 		{
-			tmp = *pts; *pts++ = *ptt; *ptt-- = tmp;
+			tmp = MOVE(*pts); *pts++ = MOVE(*ptt); *ptt-- = MOVE(tmp);
 		}
 		while (reverse--);
 
@@ -331,6 +476,7 @@ void FUNC(parity_merge_four)(T *dest, T *from, CMPFUNC<T> *cmp)
 	*dest = cmp(ptl, ptr) > 0 ? *ptl : *ptr;
 }
 
+//move smaller to  left part, bigger to right part
 template<typename T>
 void FUNC(parity_merge_eight)(T *dest, T *from, CMPFUNC<T> *cmp)
 {
@@ -392,26 +538,26 @@ void FUNC(forward_merge)(T *dest, T *from, size_t block, CMPFUNC<T> *cmp)
 		{
 			if (cmp(l, r) <= 0)
 			{
-				*dest++ = *l++;
+				*dest++ = MOVE(*l++);
+				continue;
+			}
+			*dest++ = MOVE(*r++);
+			if (cmp(l, r) <= 0)
+			{
+				*dest++ = MOVE(*l++);
 				continue;
 			}
 			*dest++ = *r++;
 			if (cmp(l, r) <= 0)
 			{
-				*dest++ = *l++;
+				*dest++ = MOVE(*l++);
 				continue;
 			}
-			*dest++ = *r++;
-			if (cmp(l, r) <= 0)
-			{
-				*dest++ = *l++;
-				continue;
-			}
-			*dest++ = *r++;
+			*dest++ = MOVE(*r++);
 		}
 		while (l < m);
 
-		do *dest++ = *r++; while (r < e);
+		do *dest++ = MOVE(*r++); while (r < e);
 	}
 	else
 	{
@@ -419,26 +565,26 @@ void FUNC(forward_merge)(T *dest, T *from, size_t block, CMPFUNC<T> *cmp)
 		{
 			if (cmp(l, r) > 0)
 			{
-				*dest++ = *r++;
+				*dest++ = MOVE(*r++);
 				continue;
 			}
 			*dest++ = *l++;
 			if (cmp(l, r) > 0)
 			{
-				*dest++ = *r++;
+				*dest++ = MOVE(*r++);
 				continue;
 			}
 			*dest++ = *l++;
 			if (cmp(l, r) > 0)
 			{
-				*dest++ = *r++;
+				*dest++ = MOVE(*r++);
 				continue;
 			}
-			*dest++ = *l++;
+			*dest++ = MOVE(*l++);
 		}
 		while (r < e);
 
-		do *dest++ = *l++; while (l < m);
+		do *dest++ = MOVE(*l++); while (l < m);
 	}
 }
 
@@ -471,11 +617,11 @@ void FUNC(quad_merge_block)(T *array, T *swap, unsigned int block, CMPFUNC<T> *c
 
 			c = array;
 
-			do *pts++ = *c++; while (c < c_max); // step 1
+			do *pts++ = MOVE(*c++); while (c < c_max); // step 1
 
 			c_max = c + block_x_2;
 
-			do *pts++ = *c++; while (c < c_max); // step 2
+			do *pts++ = MOVE(*c++); while (c < c_max); // step 2
 
 			return FUNC(forward_merge)(array, swap, block_x_2, cmp); // step 3
 		}
@@ -484,7 +630,7 @@ void FUNC(quad_merge_block)(T *array, T *swap, unsigned int block, CMPFUNC<T> *c
 		c = array;
 		c_max = array + block_x_2;
 
-		do *pts++ = *c++; while (c < c_max); // step 1
+		do *pts++ = MOVE(*c++); while (c < c_max); // step 1
 	}
 	else
 	{
@@ -666,3 +812,12 @@ void FUNC(quadsort_swap)(T *array, T *swap, size_t nmemb, CMPFUNC<T> *cmp)
 		FUNC(quad_merge)(array, swap, nmemb, 16, cmp);
 	}
 }
+
+#undef swap_two
+#undef swap_three
+#undef swap_four
+#undef swap_five
+#undef swap_six
+#undef swap_seven
+#undef swap_eight
+#undef tail_swap_eight
