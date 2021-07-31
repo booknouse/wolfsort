@@ -191,7 +191,7 @@ void FUNC(flux_partition)(T *array, T *swap, T *ptx, size_t nmemb, CMPFUNC<T> *c
     if (a_size <= s_size / 16 || s_size <= FLUX_OUT)
     {
         //memcpy(pta, swap, s_size * sizeof(VAR));
-        std::copy(swap,swap+s_size, pta);
+        std::move(swap,swap+s_size, pta);
         FUNC(quadsort_swap)(pta, swap, s_size, cmp);
     }
     else

@@ -245,7 +245,7 @@ void FUNC(tail_swap)(T *array, unsigned char nmemb, CMPFUNC<T> *cmp)
 		}
 
 		//memmove(pta + 1, pta, (ptt - pta) * sizeof(VAR));
-		std::copy(pta, ptt, pta+1);
+		std::move(pta, ptt, pta+1);
 
 		*pta = MOVE(tmp);
 	}
@@ -689,7 +689,7 @@ void FUNC(partial_backward_merge)(T *array, T *swap, size_t nmemb, size_t block,
 	}
 
 	//memcpy(swap, r, (e - m) * sizeof(VAR));
-	std::copy(r, r+(e-m), swap);
+	std::move(r, r+(e-m), swap);
 
 	s = swap + (e - r);
 

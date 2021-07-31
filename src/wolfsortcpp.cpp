@@ -83,7 +83,7 @@ void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> *igno
                 else
                 {
                     //memcpy(pta, pts, bsize * size);
-                    std::copy(pts, pts+bsize, pta);
+                    std::move(pts, pts+bsize, pta);
 
                     FUNC(fluxsort_swap)(pta, pts, bsize, ignore);
                 }
@@ -172,7 +172,7 @@ void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> *igno
                 else
                 {
                     //memcpy(pta, pts, bsize * size);
-                    std::copy(pts,pts+bsize,pta);
+                    std::move(pts,pts+bsize,pta);
 
                     FUNC(fluxsort_swap)(pta, pts, bsize, ignore);
                 }
