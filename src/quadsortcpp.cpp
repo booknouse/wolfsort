@@ -245,7 +245,7 @@ void FUNC(tail_swap)(T *array, unsigned char nmemb, CMPFUNC<T> *cmp)
 		}
 
 		//memmove(pta + 1, pta, (ptt - pta) * sizeof(VAR));
-		std::move(pta, ptt, pta+1);
+		std::move_backward(pta, ptt, ptt+1);
 
 		*pta = MOVE(tmp);
 	}
