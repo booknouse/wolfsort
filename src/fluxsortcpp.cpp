@@ -28,7 +28,7 @@
 #define FLUX_OUT 24
 
 template<typename T>
-size_t FUNC(flux_analyze)(T *array, size_t nmemb, CMPFUNC<T> *cmp)
+size_t FUNC(flux_analyze)(T *array, size_t nmemb, CMPFUNC<T> cmp)
 {
     size_t cnt, balance = 0;
     T *pta, *ptb, swap;
@@ -73,7 +73,7 @@ size_t FUNC(flux_analyze)(T *array, size_t nmemb, CMPFUNC<T> *cmp)
 }
 
 template<typename T>
-size_t FUNC(median_of_five)(T *array, size_t v0, size_t v1, size_t v2, size_t v3, size_t v4, CMPFUNC<T> *cmp)
+size_t FUNC(median_of_five)(T *array, size_t v0, size_t v1, size_t v2, size_t v3, size_t v4, CMPFUNC<T> cmp)
 {
     unsigned char t[4], val;
 
@@ -101,7 +101,7 @@ size_t FUNC(median_of_five)(T *array, size_t v0, size_t v1, size_t v2, size_t v3
 }
 
 template<typename T>
-size_t FUNC(median_of_three)(T *array, size_t v0, size_t v1, size_t v2, CMPFUNC<T> *cmp)
+size_t FUNC(median_of_three)(T *array, size_t v0, size_t v1, size_t v2, CMPFUNC<T> cmp)
 {
     unsigned char t[2], val;
 
@@ -116,7 +116,7 @@ size_t FUNC(median_of_three)(T *array, size_t v0, size_t v1, size_t v2, CMPFUNC<
 }
 
 template<typename T>
-T FUNC(median_of_fifteen)(T *array, size_t nmemb, CMPFUNC<T> *cmp)
+T FUNC(median_of_fifteen)(T *array, size_t nmemb, CMPFUNC<T> cmp)
 {
     size_t v0, v1, v2, v3, v4, div = nmemb / 16;
 
@@ -130,7 +130,7 @@ T FUNC(median_of_fifteen)(T *array, size_t nmemb, CMPFUNC<T> *cmp)
 }
 
 template<typename T>
-T FUNC(median_of_nine)(T *array, size_t nmemb, CMPFUNC<T> *cmp)
+T FUNC(median_of_nine)(T *array, size_t nmemb, CMPFUNC<T> cmp)
 {
     size_t v0, v1, v2, div = nmemb / 16;
 
@@ -142,7 +142,7 @@ T FUNC(median_of_nine)(T *array, size_t nmemb, CMPFUNC<T> *cmp)
 }
 
 template<typename T>
-void FUNC(flux_partition)(T *array, T *swap, T *ptx, size_t nmemb, CMPFUNC<T> *cmp)
+void FUNC(flux_partition)(T *array, T *swap, T *ptx, size_t nmemb, CMPFUNC<T> cmp)
 {
     unsigned char val;
     size_t a_size, s_size;
@@ -210,7 +210,7 @@ void FUNC(flux_partition)(T *array, T *swap, T *ptx, size_t nmemb, CMPFUNC<T> *c
 }
 
 template<typename T>
-void FUNC(fluxsort)(T *array, size_t nmemb, CMPFUNC<T> *cmp)
+void FUNC(fluxsort)(T *array, size_t nmemb, CMPFUNC<T> cmp)
 {
     if (nmemb < 2)
     {
@@ -233,7 +233,7 @@ void FUNC(fluxsort)(T *array, size_t nmemb, CMPFUNC<T> *cmp)
 }
 
 template<typename T>
-void FUNC(fluxsort_swap)(T *array, T *swap, size_t nmemb, CMPFUNC<T> *cmp)
+void FUNC(fluxsort_swap)(T *array, T *swap, size_t nmemb, CMPFUNC<T> cmp)
 {
     if (nmemb < 32)
     {

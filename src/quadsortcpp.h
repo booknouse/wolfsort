@@ -36,7 +36,7 @@
 
 //typedef int CMPFUNC (const void *a, const void *b);
 template<typename T>
-using CMPFUNC=int (const T *a, const T *b);
+using CMPFUNC=std::function<int (const T *a, const T *b)>;
 
 
 //#define cmp(a,b) (*(a) > *(b))

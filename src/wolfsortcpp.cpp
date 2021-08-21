@@ -1,5 +1,5 @@
 template<typename T>
-void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> *ignore)
+void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> ignore)
 {
     if (nmemb < 1024)
     {

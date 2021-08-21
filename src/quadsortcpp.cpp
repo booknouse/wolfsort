@@ -172,7 +172,7 @@
 }
 
 template<typename T>
-void FUNC(tail_swap)(T *array, unsigned char nmemb, CMPFUNC<T> *cmp)
+void FUNC(tail_swap)(T *array, unsigned char nmemb, CMPFUNC<T> cmp)
 {
 	T *pta, *end, *ptt, tmp;
 	unsigned char mid, top, offset;
@@ -252,12 +252,12 @@ void FUNC(tail_swap)(T *array, unsigned char nmemb, CMPFUNC<T> *cmp)
 }
 
 template<typename T>
-void FUNC(parity_merge_sixteen)(T *dest, T *from, CMPFUNC<T> *cmp);
+void FUNC(parity_merge_sixteen)(T *dest, T *from, CMPFUNC<T> cmp);
 template<typename T>
-void FUNC(tail_merge)(T *array, T *swap, unsigned int nmemb, unsigned int block, CMPFUNC<T> *cmp);
+void FUNC(tail_merge)(T *array, T *swap, unsigned int nmemb, unsigned int block, CMPFUNC<T> cmp);
 
 template<typename T>
-unsigned int FUNC(quad_swap)(T *array, unsigned int nmemb, CMPFUNC<T> *cmp)
+unsigned int FUNC(quad_swap)(T *array, unsigned int nmemb, CMPFUNC<T> cmp)
 {
 	T swap[16];
 	unsigned int count, reverse;
@@ -453,7 +453,7 @@ unsigned int FUNC(quad_swap)(T *array, unsigned int nmemb, CMPFUNC<T> *cmp)
 }
 
 template<typename T>
-void FUNC(parity_merge_four)(T *dest, T *from, CMPFUNC<T> *cmp)
+void FUNC(parity_merge_four)(T *dest, T *from, CMPFUNC<T> cmp)
 {
 	T *ptl, *ptr;
 
@@ -478,7 +478,7 @@ void FUNC(parity_merge_four)(T *dest, T *from, CMPFUNC<T> *cmp)
 
 //move smaller to  left part, bigger to right part
 template<typename T>
-void FUNC(parity_merge_eight)(T *dest, T *from, CMPFUNC<T> *cmp)
+void FUNC(parity_merge_eight)(T *dest, T *from, CMPFUNC<T> cmp)
 {
 	T *ptl, *ptr;
 
@@ -510,7 +510,7 @@ void FUNC(parity_merge_eight)(T *dest, T *from, CMPFUNC<T> *cmp)
 }
 
 template<typename T>
-void FUNC(parity_merge_sixteen)(T *array, T *swap, CMPFUNC<T> *cmp)
+void FUNC(parity_merge_sixteen)(T *array, T *swap, CMPFUNC<T> cmp)
 {
 	if (cmp(array + 3, array + 4) <= 0 && cmp(array + 7, array + 8) <= 0 && cmp(array + 11, array + 12) <= 0)
 	{
@@ -523,7 +523,7 @@ void FUNC(parity_merge_sixteen)(T *array, T *swap, CMPFUNC<T> *cmp)
 }
 
 template<typename T>
-void FUNC(forward_merge)(T *dest, T *from, size_t block, CMPFUNC<T> *cmp)
+void FUNC(forward_merge)(T *dest, T *from, size_t block, CMPFUNC<T> cmp)
 {
 	T *l, *r, *m, *e; // left, right, middle, end
 
@@ -594,7 +594,7 @@ void FUNC(forward_merge)(T *dest, T *from, size_t block, CMPFUNC<T> *cmp)
 // main memory: [A  B  C  D] step 3
 
 template<typename T>
-void FUNC(quad_merge_block)(T *array, T *swap, unsigned int block, CMPFUNC<T> *cmp)
+void FUNC(quad_merge_block)(T *array, T *swap, unsigned int block, CMPFUNC<T> cmp)
 {
 	register T *pts, *c, *c_max;
 	unsigned int block_x_2 = block * 2;
@@ -642,7 +642,7 @@ void FUNC(quad_merge_block)(T *array, T *swap, unsigned int block, CMPFUNC<T> *c
 }
 
 template<typename T>
-void FUNC(quad_merge)(T *array, T *swap, unsigned int nmemb, unsigned int block, CMPFUNC<T> *cmp)
+void FUNC(quad_merge)(T *array, T *swap, unsigned int nmemb, unsigned int block, CMPFUNC<T> cmp)
 {
 	T *pta, *pte;
 
@@ -670,7 +670,7 @@ void FUNC(quad_merge)(T *array, T *swap, unsigned int nmemb, unsigned int block,
 }
 
 template<typename T>
-void FUNC(partial_backward_merge)(T *array, T *swap, size_t nmemb, size_t block, CMPFUNC<T> *cmp)
+void FUNC(partial_backward_merge)(T *array, T *swap, size_t nmemb, size_t block, CMPFUNC<T> cmp)
 {
 	T *r, *m, *e, *s; // right, middle, end, swap
 
@@ -724,7 +724,7 @@ void FUNC(partial_backward_merge)(T *array, T *swap, size_t nmemb, size_t block,
 }
 
 template<typename T>
-void FUNC(tail_merge)(T *array, T *swap, unsigned int nmemb, unsigned int block, CMPFUNC<T> *cmp)
+void FUNC(tail_merge)(T *array, T *swap, unsigned int nmemb, unsigned int block, CMPFUNC<T> cmp)
 {
 	register T *pta, *pte;
 
@@ -762,7 +762,7 @@ void FUNC(tail_merge)(T *array, T *swap, unsigned int nmemb, unsigned int block,
 ///////////////////////////////////////////////////////////////////////////////
 
 template<typename T>
-void FUNC(quadsort)(T *array, size_t nmemb, CMPFUNC<T> *cmp)
+void FUNC(quadsort)(T *array, size_t nmemb, CMPFUNC<T> cmp)
 {
     if (nmemb < 2)
     {
@@ -794,7 +794,7 @@ void FUNC(quadsort)(T *array, size_t nmemb, CMPFUNC<T> *cmp)
 }
 
 template<typename T>
-void FUNC(quadsort_swap)(T *array, T *swap, size_t nmemb, CMPFUNC<T> *cmp)
+void FUNC(quadsort_swap)(T *array, T *swap, size_t nmemb, CMPFUNC<T> cmp)
 {
 	if (nmemb < 16)
 	{

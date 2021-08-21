@@ -99,7 +99,7 @@
 }
 
 template<typename T>
-void FUNC(guarded_insert_cpy)(T *array, T key, unsigned char nmemb, CMPFUNC<T> *cmp)
+void FUNC(guarded_insert_cpy)(T *array, T key, unsigned char nmemb, CMPFUNC<T> cmp)
 {
     T *pta, *tpa;
     unsigned char top;
@@ -119,7 +119,7 @@ void FUNC(guarded_insert_cpy)(T *array, T key, unsigned char nmemb, CMPFUNC<T> *
 }
 
 template<typename T>
-void FUNC(tail_swap_cpy)(T *dest, T *array, unsigned char nmemb, CMPFUNC<T> *cmp)
+void FUNC(tail_swap_cpy)(T *dest, T *array, unsigned char nmemb, CMPFUNC<T> cmp)
 {
     int swap;
     register unsigned char cnt;
@@ -151,7 +151,7 @@ void FUNC(tail_swap_cpy)(T *dest, T *array, unsigned char nmemb, CMPFUNC<T> *cmp
 }
 
 template<typename T>
-void FUNC(tail_merge_cpy)(T *dest, T *array, size_t nmemb, size_t block, CMPFUNC<T> *cmp)
+void FUNC(tail_merge_cpy)(T *dest, T *array, size_t nmemb, size_t block, CMPFUNC<T> cmp)
 {
     register T *pta, *ptb, *ptd, *ptm;
 
