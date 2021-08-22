@@ -37,6 +37,8 @@
 //typedef int CMPFUNC (const void *a, const void *b);
 template<typename T>
 using CMPFUNC=std::function<int (const T *a, const T *b)>;
+template<typename T>
+using MODFUNC=std::function<unsigned int (const T *a, const unsigned long long module)>;
 //#define cmp(a,b) (*(a) > *(b))
 #undef FUNC
 #undef MOVE

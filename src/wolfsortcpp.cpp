@@ -1,5 +1,5 @@
 template<typename T>
-void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> ignore)
+void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> ignore, MODFUNC<T> mod_function)
 {
     if (nmemb < 1024)
     {
@@ -40,7 +40,8 @@ void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> ignor
         pta = array;
         for (cnt = nmemb ; cnt ; cnt--)
         {
-            index = PTR_VALUE(pta++) / moduler;
+            //index = PTR_VALUE(pta++) / moduler;
+            index = mod_function(pta++, moduler);
 
             if (++count[index] == bsize)
             {
@@ -62,7 +63,8 @@ void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> ignor
 
         for (cnt = nmemb ; cnt ; cnt--)
         {
-            index = PTR_VALUE(pta) / moduler;
+            //index = PTR_VALUE(pta) / moduler;
+            index = mod_function(pta, moduler);
 
             swap[stack[index]++] = *pta++;
         }
@@ -129,7 +131,8 @@ void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> ignor
 
         for (cnt = nmemb ; cnt ; cnt--)
         {
-            index = PTR_VALUE(pta++) / moduler;
+            //index = PTR_VALUE(pta++) / moduler;
+            index = mod_function(pta++, moduler);
 
             if (++count[index] == bsize)
             {
@@ -151,7 +154,8 @@ void FUNC(wolfsort)(T *array, size_t nmemb, unsigned char size, CMPFUNC<T> ignor
 
         for (cnt = nmemb ; cnt ; cnt--)
         {
-            index =  PTR_VALUE(pta) / moduler;
+            //index =  PTR_VALUE(pta) / moduler;
+            index = mod_function(pta, moduler);
 
             swap[stack[index]++] = *pta++;
         }
