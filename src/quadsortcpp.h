@@ -33,6 +33,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <errno.h>
+#include <functional>
 
 //typedef int CMPFUNC (const void *a, const void *b);
 template<typename T>
